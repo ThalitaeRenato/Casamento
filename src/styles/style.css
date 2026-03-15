@@ -1,0 +1,873 @@
+/* ============================================================
+   STYLE.CSS — Thalita & Renato · 18.10.2026
+   Paleta: Creme, Verde Oliva, Dourado, Lilás
+   ============================================================ */
+
+
+/* ── VARIÁVEIS DE COR E FONTE ──────────────────────────────── */
+:root {
+  --cream:  #F7F3EC;   /* fundo principal (creme claro) */
+  --cream2: #EEE9DC;   /* fundo alternado de seções */
+  --cream3: #E6DFCE;   /* fundo do rodapé */
+  --g1:     #4A6A38;   /* verde oliva principal */
+  --g2:     #365228;   /* verde oliva escuro (hover) */
+  --gold:   #8C6E18;   /* dourado principal */
+  --gold2:  #AA8A28;   /* dourado médio */
+  --gold3:  #D4B050;   /* dourado claro */
+  --lilac:  #506868;   /* lilás/cinza azulado */
+  --black:  #0E0E0C;   /* preto suave */
+  --text:   #141412;   /* texto principal */
+  --muted:  #4A4A44;   /* texto secundário */
+}
+
+
+/* ── RESET E BASE ────────────────────────────────────────────── */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth; /* rola suavemente ao clicar nos links do menu */
+}
+
+body {
+  background: var(--cream);
+  color: var(--text);
+  font-family: 'Jost', sans-serif;
+  font-weight: 300;
+  overflow-x: hidden; /* evita scroll horizontal */
+}
+
+/* barra de rolagem fina e estilizada */
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: var(--cream); }
+::-webkit-scrollbar-thumb { background: var(--gold3); }
+
+
+/* ── NAVEGAÇÃO (MENU FIXO NO TOPO) ──────────────────────────── */
+nav {
+  position: fixed;    /* fica fixo enquanto rola a página */
+  top: 0; left: 0; right: 0;
+  z-index: 200;       /* fica por cima de tudo */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 52px;
+  height: 68px;
+  background: rgba(247, 243, 236, 0.95); /* fundo levemente transparente */
+  backdrop-filter: blur(14px);           /* efeito vidro fosco */
+  border-bottom: 1px solid rgba(140, 110, 24, 0.14);
+}
+
+/* logo T&R */
+.nav-logo {
+  height: 40px;
+  width: auto;
+  object-fit: contain;
+  background: transparent;
+}
+
+.nav-logo span {
+  font-style: italic;
+  font-family: 'Playfair Display', serif;
+  font-size: 25px;
+  font-weight: 300;
+  color: var(--lilac); /* o & em lilás */
+}
+
+/* links do menu */
+.nav-links { display: flex; gap: 40px; }
+
+.nav-links a {
+  font-family: 'Cinzel', serif;
+  font-size: 14px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.3s;
+  position: relative;
+}
+
+/* sublinhado animado no hover */
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -5px; left: 0; right: 0;
+  height: 1px;
+  background: var(--gold);
+  transform: scaleX(0);       /* começa invisível */
+  transition: transform 0.3s;
+}
+.nav-links a:hover { color: var(--g1); }
+.nav-links a:hover::after { transform: scaleX(1); } /* aparece no hover */
+
+
+/* ── HERO (SEÇÃO INICIAL) ────────────────────────────────────── */
+/* PARA TROCAR A IMAGEM DE FUNDO:
+   Substitua o url('...') por url('sua-imagem.jpg')
+   ou mantenha o base64 embutido no HTML */
+#hero {
+  min-height: 100vh;           /* ocupa a tela inteira */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  padding: 100px 40px 80px;
+  /* background definido no index.html com a imagem embutida */
+}
+
+/* container central do hero */
+.hero-c {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 8000px;
+}
+
+/* "SAVE THE DATE" */
+.h-tag {
+  font-family: 'Cinzel', serif;
+  font-size: 20px;
+  letter-spacing: 9px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 32px;
+  text-shadow: 0 2px 12px rgba(247, 243, 236, 0.95);
+  /* animação de entrada — definida no @keyframes up */
+  opacity: 0;
+  animation: up 1s 0.3s forwards;
+}
+
+/* caixa do vídeo */
+.video-hero {
+  width: 100%;
+  max-width: 740px;
+  position: relative;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 24px 64px rgba(14, 14, 12, 0.25);
+  background: #111;
+  aspect-ratio: 16 / 9; /* mantém proporção */
+  opacity: 0;
+  animation: up 1.1s 0.5s forwards;
+}
+
+/* iframe do YouTube ocupa 100% da caixa */
+.video-hero iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* bloco de nomes abaixo do vídeo */
+.h-names-block {
+  margin-top: 40px;
+  text-align: center;
+  opacity: 0;
+  animation: up 1s 0.9s forwards;
+}
+
+/* THALITA · RENATO */
+.h-names {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(28px, 5vw, 62px); /* responsivo: mínimo 28px, máximo 62px */
+  font-weight: 400;
+  letter-spacing: 8px;
+  color: var(--black);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  text-shadow: 0 2px 12px rgba(247, 243, 236, 0.95);
+}
+
+/* ponto · entre os nomes */
+.h-names .dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--gold);
+  flex-shrink: 0;
+}
+
+/* data abaixo dos nomes */
+.h-date {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(20px, 3vw, 32px);
+  font-weight: 300;
+  letter-spacing: 6px;
+  color: var(--muted);
+  margin-top: 12px;
+  text-shadow: 0 2px 10px rgba(247, 243, 236, 0.95);
+}
+
+/* ── SCROLL INDICATOR — ROLAR ── */
+.h-scroll {
+  margin-top: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  opacity: 0;
+  animation: up 1s 1.3s forwards;
+}
+
+.h-scroll span {
+  font-family: 'Cinzel', serif;
+  font-size: 14px;
+  letter-spacing: 5px;
+  color: var(--muted);
+  text-transform: uppercase;
+  animation: piscar 2s 2s infinite; /* ← texto piscando */
+}
+
+.scroll-l {
+  width: 1px;
+  height: 44px;
+  background: linear-gradient(to bottom, var(--gold), transparent);
+  animation: descerLinha 1.5s 2s infinite; /* ← linha descendo */
+  transform-origin: top;
+}
+
+/* texto pisca suavemente */
+@keyframes piscar {
+  0%, 100% { opacity: 0.3; }
+  50%       { opacity: 1; }
+}
+
+/* linha cresce de cima para baixo e some */
+@keyframes descerLinha {
+  0%   { transform: scaleY(0); opacity: 0; transform-origin: top; }
+  50%  { transform: scaleY(1); opacity: 1; transform-origin: top; }
+  100% { transform: scaleY(1); opacity: 0; transform-origin: bottom; }
+}
+/* pisca a linha de scroll */
+@keyframes sp {
+  0%, 100% { opacity: 0.3; }
+  50%       { opacity: 1; }
+}
+
+
+/* ── CONTAGEM REGRESSIVA ─────────────────────────────────────── */
+#cdsec {
+  padding: 68px 40px;
+  background: var(--cream2);
+  border-top: 1px solid rgba(140, 110, 24, 0.16);
+  border-bottom: 1px solid rgba(140, 110, 24, 0.16);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* gradiente sutil de fundo */
+#cdsec::before {
+  content: '';
+  position: absolute; inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 60% 100% at 0% 50%,   rgba(74,106,56,.09) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 100% at 100% 50%,  rgba(140,110,24,.05) 0%, transparent 60%);
+}
+
+.cd-tag {
+  font-family: 'Cinzel', serif;
+  font-size: 20px;
+  letter-spacing: 5px;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 36px;
+  position: relative;
+}
+
+.cd-wrap {
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+  flex-wrap: wrap;
+  position: relative;
+}
+
+/* cada caixinha (dias/horas/min/seg) */
+.cd-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 28px 38px;
+  background: rgba(255,255,255,0.6);
+  border: 1px solid rgba(140,110,24,0.18);
+  min-width: 120px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* linha colorida na base de cada caixa */
+.cd-box::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(to right, var(--g1), var(--gold2));
+}
+
+/* número grande */
+.cd-n {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 100px;
+  font-weight: 300;
+  color: var(--black);
+  line-height: 1;
+}
+
+/* label (DIAS, HORAS...) */
+.cd-l {
+  font-family: 'Cinzel', serif;
+  font-size: 16px;
+  letter-spacing: 3px;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-top: 8px;
+}
+
+
+/* ── SEÇÕES GENÉRICAS ────────────────────────────────────────── */
+.sec {
+  padding: 100px 40px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* seções com fundo alternado (levemente mais escuro) */
+.sec.alt {
+  background:
+    radial-gradient(ellipse 80% 60% at 5% 50%,  rgba(74,106,56,.07) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 80% at 95% 50%,  rgba(140,110,24,.04) 0%, transparent 60%),
+    var(--cream2);
+}
+
+/* container com largura máxima centralizado */
+.si { max-width: 900px; margin: 0 auto; }
+
+/* label pequena acima dos títulos (ex: "Nossa História") */
+.ey {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-family: 'Cinzel', serif;
+  font-size: 17px;
+  letter-spacing: 5px;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+.ey::before {
+  content: '';
+  width: 28px; height: 1px;
+  background: var(--gold);
+  opacity: 0.5;
+}
+
+/* título principal de cada seção */
+.st {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(52px, 8vw, 96px);
+  font-weight: 300;
+  font-style: italic;
+  color: var(--black);
+  line-height: 1.05;
+  margin-bottom: 44px;
+}
+/* palavra em destaque dentro do título */
+.st b {
+  font-weight: 500;
+  font-style: normal;
+  color: var(--g1);
+}
+
+
+/* ── NOSSA HISTÓRIA (TIMELINE) ───────────────────────────────── */
+.story-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: start;
+}
+
+.story-text p {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 24px;
+  line-height: 1.9;
+  color: var(--muted);
+  font-style: italic;
+}
+.story-text p + p { margin-top: 20px; }
+
+/* cada item da timeline */
+.story-item {
+  display: flex;
+  gap: 24px;
+  padding: 24px 0;
+  border-bottom: 1px solid rgba(140, 110, 24, 0.13);
+}
+.story-item:first-child { border-top: 1px solid rgba(140, 110, 24, 0.13); }
+
+.story-year {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 48px;
+  font-weight: 300;
+  font-style: italic;
+  color: rgba(140, 110, 24, 0.3);
+  line-height: 1;
+  flex-shrink: 0;
+  width: 90px;
+}
+
+.story-content h4 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 26px;
+  font-weight: 500;
+  color: var(--black);
+  margin-bottom: 6px;
+}
+.story-content p { font-size: 18px; color: var(--muted); line-height: 1.7; }
+
+
+/* ── CALENDÁRIO ── */
+#calendar {
+  padding: 80px 40px;
+  background: var(--cream);
+  border-top: 1px solid rgba(140, 110, 24, 0.08);
+}
+
+.cal-wrap {
+  max-width: 680px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* imagem sem fundo branco aparecendo */
+.cal-img {
+  width: 100%;
+  max-width: 580px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+
+  /* remove o fundo branco misturando com o creme do site */
+  mix-blend-mode: multiply;
+
+  /* leve sombra para dar profundidade */
+  filter: drop-shadow(0 8px 32px rgba(140, 110, 24, 0.12));
+
+  border-radius: 4px;
+}
+
+@media (max-width: 768px) {
+  #calendar { padding: 60px 20px; }
+  .cal-img { max-width: 100%; }
+}
+
+.cal-wrap { max-width: 560px; margin: 0 auto; text-align: center; position: relative; }
+
+/* título "Salve a Data" */
+.cal-heading {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(48px, 8vw, 84px);
+  font-style: italic;
+  font-weight: 300;
+  color: var(--black);
+  line-height: 1.15;
+}
+
+
+/* ── INFORMAÇÕES DO EVENTO ───────────────────────────────────── */
+.event-cards {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 2px;
+  margin-top: 48px;
+}
+
+.event-card {
+  padding: 40px 32px;
+  background: rgba(255,255,255,0.6);
+  border: 1px solid rgba(140,110,24,0.15);
+  text-align: center;
+  transition: background 0.3s;
+}
+.event-card:hover { background: rgba(255,255,255,0.85); }
+
+.event-icon { font-size: 32px; margin-bottom: 16px; }
+
+.event-card h3 {
+  font-family: 'Cinzel', serif;
+  font-size: 13px; letter-spacing: 3px;
+  color: var(--gold); text-transform: uppercase; margin-bottom: 12px;
+}
+.event-card p {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 26px; color: var(--black); line-height: 1.5;
+}
+.event-card small { font-size: 17px; color: var(--muted); display: block; margin-top: 6px; }
+
+
+/* ── GALERIA DE FOTOS ────────────────────────────────────────── */
+.gallery-intro {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 24px; font-style: italic;
+  color: var(--muted); line-height: 1.8;
+  margin-bottom: 40px; max-width: 560px;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3px;
+}
+
+/* slot vazio esperando foto */
+.gallery-slot {
+  aspect-ratio: 1;
+  background: rgba(255,255,255,0.5);
+  border: 1px solid rgba(140,110,24,0.15);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 10px; transition: background 0.3s;
+}
+.gallery-slot:first-child { grid-row: span 2; aspect-ratio: auto; } /* primeiro slot maior */
+.gallery-slot:hover { background: rgba(255,255,255,0.8); }
+.gallery-slot svg { opacity: 0.3; }
+.gallery-slot span {
+  font-family: 'Cinzel', serif;
+  font-size: 11px; letter-spacing: 2px;
+  color: var(--muted); text-transform: uppercase; opacity: 0.6;
+}
+
+.gallery-note {
+  margin-top: 24px; text-align: center;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px; font-style: italic; color: var(--muted);
+}
+
+
+/* ── FORMULÁRIO DE CONFIRMAÇÃO (RSVP) ───────────────────────── */
+.rsvp-lay {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px; align-items: start;
+}
+
+/* texto explicativo à esquerda */
+.rl-p {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 24px; line-height: 2;
+  color: var(--muted); font-style: italic;
+}
+.rl-dl {
+  display: inline-block; margin-top: 24px;
+  font-family: 'Cinzel', serif;
+  font-size: 15px; letter-spacing: 3px;
+  text-transform: uppercase; color: var(--g1);
+}
+
+/* formulário à direita */
+.rr { display: flex; flex-direction: column; }
+
+/* cada campo do formulário */
+.rf {
+  display: flex; flex-direction: column;
+  border-bottom: 1px solid rgba(140,110,24,0.2);
+  padding: 18px 0;
+}
+.rf:first-child { border-top: 1px solid rgba(140,110,24,0.2); }
+
+.rf label {
+  font-family: 'Cinzel', serif;
+  font-size: 13px; letter-spacing: 3px;
+  color: var(--gold); text-transform: uppercase; margin-bottom: 7px;
+}
+
+/* inputs, selects e textarea — estilo limpo sem borda */
+.rf input, .rf select, .rf textarea {
+  background: transparent; border: none;
+  color: var(--text);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 26px; font-weight: 400;
+  outline: none; -webkit-appearance: none; width: 100%;
+}
+.rf input::placeholder, .rf textarea::placeholder { color: var(--muted); opacity: 0.55; }
+.rf select option { background: var(--cream); }
+.rf textarea { resize: none; height: 88px; font-size: 22px; line-height: 1.6; }
+
+/* botão confirmar */
+.r-btn {
+  display: block;
+  margin: 28px auto 0;
+  width: fit-content;
+  font-family: 'Cinzel', serif;
+  font-size: 15px; letter-spacing: 3px;
+  text-transform: uppercase; padding: 18px 44px;
+  background: var(--g1); color: var(--cream);
+  border: none; cursor: pointer; transition: background 0.3s;
+  text-decoration: none;
+  text-align: center;
+}
+
+.r-btn:hover { background: var(--g2); }
+
+/* mensagem de sucesso após confirmar */
+.r-ok {
+  display: none; padding: 32px;
+  border: 1px solid var(--g1);
+  background: rgba(74,106,56,0.07); text-align: center;
+}
+.r-ok h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 44px; font-style: italic; color: var(--black);
+}
+.r-ok p { font-size: 18px; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; margin-top: 8px; }
+
+
+/* ── LISTA DE PRESENTES ──────────────────────────────────────── */
+.g-intro {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 24px; font-style: italic;
+  color: var(--muted); line-height: 1.9;
+  max-width: 560px; margin-bottom: 48px;
+}
+
+.g-list { display: flex; flex-direction: column; border-top: 1px solid rgba(140,110,24,0.2); }
+
+/* cada linha de presente */
+.g-row {
+  display: grid;
+  grid-template-columns: 64px 1fr auto;
+  align-items: center; gap: 24px;
+  padding: 28px 0;
+  border-bottom: 1px solid rgba(140,110,24,0.13);
+  transition: all 0.25s;
+}
+.g-row:hover { background: rgba(255,255,255,0.55); padding-left: 14px; padding-right: 14px; }
+
+/* número do presente (01, 02...) */
+.g-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 52px; font-weight: 300; font-style: italic;
+  color: rgba(140,110,24,0.28); line-height: 1;
+}
+
+.g-info h4 { font-family: 'Cormorant Garamond', serif; font-size: 30px; font-weight: 500; color: var(--black); }
+.g-info p  { font-size: 19px; color: var(--muted); margin-top: 3px; line-height: 1.6; }
+.g-tag     { font-family: 'Cinzel', serif; font-size: 13px; letter-spacing: 2px; color: var(--gold); text-transform: uppercase; margin-top: 5px; }
+
+/* ações: Ver e Reservar */
+.g-act { display: flex; flex-direction: column; gap: 8px; align-items: flex-end; }
+
+.g-act a {
+  font-family: 'Cinzel', serif; font-size: 13px; letter-spacing: 2px;
+  color: var(--g1); text-transform: uppercase; text-decoration: none;
+  white-space: nowrap; padding: 10px 20px;
+  border: 1px solid rgba(54,82,40,0.25); transition: all 0.3s;
+}
+.g-act a:hover { background: var(--g1); color: var(--cream); }
+
+.g-reserve {
+  font-family: 'Cinzel', serif; font-size: 12px; letter-spacing: 2px;
+  color: var(--muted); text-transform: uppercase; white-space: nowrap;
+  padding: 8px 16px; border: 1px solid rgba(140,110,24,0.2);
+  background: transparent; cursor: pointer; transition: all 0.3s;
+}
+.g-reserve:hover { background: var(--gold3); color: var(--black); }
+/* quando reservado */
+.g-reserve.active { background: rgba(74,106,56,0.1); color: var(--g1); border-color: var(--g1); }
+
+/* citação no final da lista */
+.g-foot {
+  margin-top: 48px; padding: 32px 36px;
+  border-left: 2px solid var(--g1);
+  background: rgba(74,106,56,0.05);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 24px; font-style: italic; color: var(--text); line-height: 1.9;
+}
+
+
+/* ── RODAPÉ ─────────────────────────────────────────────────── */
+footer {
+  padding: 88px 40px 60px; text-align: center;
+  background:
+    radial-gradient(ellipse 80% 70% at 0% 100%,   rgba(74,106,56,.13) 0%, transparent 55%),
+    radial-gradient(ellipse 80% 70% at 100% 0%,    rgba(140,110,24,.07) 0%, transparent 55%),
+    var(--cream3);
+  border-top: 1px solid rgba(140,110,24,0.18);
+  position: relative; overflow: hidden;
+}
+
+/* T&R em grande no fundo do rodapé */
+.ft-mo em{
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 70px;
+}
+
+/* folhas decorativas do rodapé */
+.ft-fl { position: absolute; bottom: 0; left: 0; width: 280px; opacity: 0.1; pointer-events: none; }
+
+.ft-mo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(56px, 12vw, 112px);
+  font-weight: 300; color: var(--black);
+  letter-spacing: -3px; position: relative; z-index: 1;
+}
+.ft-mo em { font-style: italic; color: var(--lilac); }
+
+.ft-dt {
+  font-family: 'Cinzel', serif; font-size: 22px; letter-spacing: 6px;
+  color: var(--gold); margin-top: 14px; position: relative; z-index: 1;
+}
+.ft-mg {
+  font-family: 'Cormorant Garamond', serif; font-size: 24px;
+  font-style: italic; color: var(--muted); margin-top: 36px; position: relative; z-index: 1;
+}
+
+/* divisor decorativo */
+.ft-dv {
+  display: flex; align-items: center; justify-content: center;
+  gap: 16px; margin: 32px auto; max-width: 300px; position: relative; z-index: 1;
+}
+.ft-dv .fl { flex: 1; height: 1px; background: linear-gradient(to right, transparent, var(--gold)); opacity: 0.3; }
+.ft-dv .fl.r { background: linear-gradient(to left, transparent, var(--gold)); }
+
+.ft-logo {
+  width: clamp(200px, 30vw, 400px);
+  height: auto;
+  opacity: 0.85;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── MODAL PIX ───────────────────────────────────────────────── */
+#pixModal {
+  display: none;
+  position: fixed; inset: 0; z-index: 400;
+  background: rgba(14,14,12,0.75);
+  backdrop-filter: blur(6px);
+  align-items: center; justify-content: center;
+}
+
+.pix-c {
+  background: var(--cream); max-width: 400px; width: 90%;
+  padding: 56px 48px; text-align: center;
+  position: relative; border-top: 3px solid var(--gold);
+}
+.pix-x {
+  position: absolute; top: 18px; right: 22px;
+  background: none; border: none; font-size: 22px; color: var(--muted); cursor: pointer;
+}
+.pix-c h3 { font-family: 'Cinzel', serif; font-size: 13px; letter-spacing: 4px; color: var(--gold); text-transform: uppercase; margin-bottom: 22px; }
+.pix-c p  { font-family: 'Cormorant Garamond', serif; font-size: 26px; color: var(--black); }
+.pix-k   { font-size: 18px; color: var(--muted); letter-spacing: 1px; margin-top: 8px; }
+
+
+/* ── PLAYER DE MÚSICA (FIXO NO CANTO) ───────────────────────── */
+#audioPlayer {
+  position: fixed; bottom: 28px; right: 28px; z-index: 300;
+  display: flex; align-items: center; gap: 12px;
+  background: rgba(247,243,236,0.95);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(140,110,24,0.2);
+  padding: 12px 18px;
+  box-shadow: 0 8px 32px rgba(14,14,12,0.12);
+}
+
+.audio-btn {
+  width: 40px; height: 40px; border-radius: 50%;
+  background: var(--g1); border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+
+.audio-info { display: flex; flex-direction: column; }
+.audio-title { font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 2px; color: var(--gold); text-transform: uppercase; }
+.audio-sub   { font-family: 'Cormorant Garamond', serif; font-size: 15px; font-style: italic; color: var(--muted); margin-top: 1px; }
+
+
+/* ── ANIMAÇÕES DE ENTRADA (SCROLL REVEAL) ───────────────────── */
+/* elementos que entram subindo */
+.rev {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.8s, transform 0.8s;
+}
+.rev.visible { opacity: 1; transform: translateY(0); }
+
+/* elementos que entram pela esquerda */
+.rev-l {
+  opacity: 0;
+  transform: translateX(-22px);
+  transition: opacity 0.8s, transform 0.8s;
+}
+.rev-l.visible { opacity: 1; transform: translateX(0); }
+
+/* animação de entrada usada no hero */
+@keyframes up {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+
+/* ── RESPONSIVO (CELULAR) ────────────────────────────────────── */
+@media (max-width: 768px) {
+  nav { padding: 0 20px; height: 60px; }
+  .nav-logo { font-size: 26px; }
+  .nav-links { gap: 20px; }
+  .nav-links a { font-size: 11px; letter-spacing: 2px; }
+
+  .sec, #calendar { padding: 72px 20px; }
+
+  .story-grid { grid-template-columns: 1fr; gap: 36px; }
+  .event-cards { grid-template-columns: 1fr; gap: 2px; }
+
+  .gallery-grid { grid-template-columns: 1fr 1fr; }
+  .gallery-slot:first-child { grid-row: auto; aspect-ratio: 1; }
+
+  .cal-box { padding: 24px 16px; }
+  .cd-box  { padding: 20px 16px; min-width: 80px; }
+  .cd-n    { font-size: 60px; }
+
+  .rsvp-lay { grid-template-columns: 1fr; gap: 36px; }
+
+  .g-row { grid-template-columns: 44px 1fr; gap: 12px; }
+  .g-act { display: none; } /* esconde botões no celular */
+
+  #audioPlayer { bottom: 16px; right: 16px; padding: 10px 14px; }
+}
+
+.video-hero{
+  max-width:900px;
+  margin:auto;
+  aspect-ratio:16/9;
+}
+
+.video-hero video{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+}
+
+/* HERO PARA MOBILE */
+@media (max-width: 768px){
+
+  #hero{
+    background-image: url("../../img/hero-mobile.jpg") !important;
+    background-size: cover !important;
+    background-position: center !important;
+  }
+
+}

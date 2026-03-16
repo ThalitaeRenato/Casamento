@@ -826,7 +826,7 @@ footer {
 @media (max-width: 768px) {
   nav { padding: 0 20px; height: 60px; }
   .nav-logo { font-size: 26px; }
-  .nav-links { gap: 10px; }
+  .nav-links { gap: 15px; }
   .nav-links a { font-size: 10.5px; letter-spacing: 0.3px; }
 
   .sec, #calendar { padding: 72px 20px; }

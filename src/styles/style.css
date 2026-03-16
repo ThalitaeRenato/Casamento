@@ -202,7 +202,7 @@ nav {
 /* data abaixo dos nomes */
 .h-date {
   font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(25px, 3vw, 32px);
+  font-size: clamp(20px, 3vw, 32px);
   font-weight: 300;
   letter-spacing: 6px;
   color: var(--muted);
@@ -886,7 +886,7 @@ html {
 }
 
 .h-date {
-  font-size: clamp(14px, 3vw, 32px);
+  font-size: clamp(16px, 3vw, 32px);
 }
 
 .cd-n {
